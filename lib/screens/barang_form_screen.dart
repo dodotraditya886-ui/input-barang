@@ -71,7 +71,7 @@ class _BarangFormScreenState extends State<BarangFormScreen> {
       harga: int.parse(_harga.text),
       stok: int.parse(_stok.text),
       deskripsi: _deskripsi.text.trim(),
-      emailPemasok: _email.text,
+      emailPemasok: _email.text.trim().toLowerCase(),
     );
 
     final ok = _edit ? provider.perbaruiBarang(data) : provider.tambahBarang(data);
@@ -140,7 +140,7 @@ class _BarangFormScreenState extends State<BarangFormScreen> {
               const SizedBox(height: 12),
               TextFormField(
                 controller: _harga,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: 'Harga satuan',
                   prefixText: 'Rp ',
@@ -155,7 +155,7 @@ class _BarangFormScreenState extends State<BarangFormScreen> {
                     flex: 3,
                     child: TextFormField(
                       controller: _stok,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(labelText: 'Stok'),
                       validator: (v) => Validator.angka(v, 'Stok'),
                     ),
@@ -179,6 +179,7 @@ class _BarangFormScreenState extends State<BarangFormScreen> {
               TextFormField(
                 controller: _email,
                 keyboardType: TextInputType.emailAddress,
+                inputFormatters: [HurufKecilFormatter()],
                 autocorrect: false,
                 decoration: const InputDecoration(
                   labelText: 'Email pemasok (opsional)',
