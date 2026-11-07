@@ -12,11 +12,11 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   static const List<({String nama, String npm, String peran})> _anggota = [
-    (nama: 'Rahmawati Nur Fatimah', npm: '5240411232'),
-    (nama: 'ica bibit bangunan', npm: '5240411235'),
-    (nama: 'Ahmad Atsnal Lathief', npm: '5240411242'),
-    (nama: 'Muhammad Nabil S. Adji', npm: '524041150'),
-    (nama: 'Raditya Arva Narajuna Fatiha', npm: '5240411060'),
+    (nama: 'Raditya Arva Narajuna F.', npm: '5240411060', peran: 'Anggota'),
+    (nama: 'Muhammad Nabil S. Adji', npm: '5240411150', peran: 'Anggota'),
+    (nama: 'Ahmad Atsnal Lathief', npm: '5240411173', peran: 'Anggota'),
+    (nama: 'Rahmawati Nur Fatimah', npm: '5240411232', peran: 'Anggota'),
+    (nama: 'Icha Bibit Febriana', npm: '5240411235', peran: 'Anggota'),
   ];
 
   Future<void> _keluar(BuildContext context) async {
