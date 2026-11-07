@@ -46,7 +46,7 @@ class _UbahHargaStokScreenState extends State<UbahHargaStokScreen> {
           barangId: _barangId!,
           harga: int.parse(_harga.text),
           stok: int.parse(_stok.text),
-          emailPemasok: _email.text,
+          emailPemasok: _email.text.trim().toLowerCase(),
         );
     if (galat != null) {
       Umpan.galat(context, galat);
@@ -104,7 +104,7 @@ class _UbahHargaStokScreenState extends State<UbahHargaStokScreen> {
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _harga,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         labelText: 'Harga baru',
                         prefixText: 'Rp ',
@@ -115,7 +115,7 @@ class _UbahHargaStokScreenState extends State<UbahHargaStokScreen> {
                     const SizedBox(height: 14),
                     TextFormField(
                       controller: _stok,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'Stok baru',
                         suffixText: terpilih?.satuan,
@@ -128,6 +128,7 @@ class _UbahHargaStokScreenState extends State<UbahHargaStokScreen> {
                     TextFormField(
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [HurufKecilFormatter()],
                       autocorrect: false,
                       decoration: const InputDecoration(
                         labelText: 'Email pemasok',
