@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 /// Validasi input form. Dipisah dari widget agar mudah diuji.
 class Validator {
   Validator._();
@@ -24,17 +26,16 @@ class Validator {
     'proton.me',
   };
 
-  /// Email: huruf kecil semua, format benar, dan domain tidak salah ketik
-  /// dari gmail.com (mis. gmial.com, gmai.com, gmail.con).
+  /// Email: otomatis mengabaikan sensitivitas huruf besar/kecil (case-insensitive)
+  /// dan mengecek salah ketik domain populer.
   static String? email(String? v, {bool wajib = true}) {
-    if (v == null || v.isEmpty) return wajib ? 'Email wajib diisi' : null;
-    if (v != v.toLowerCase()) {
-      return 'Email tidak boleh memakai huruf kapital';
-    }
-    if (!RegExp(r'^[a-z0-9._%+\-]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$').hasMatch(v)) {
+    if (v == null || v.trim().isEmpty) return wajib ? 'Email wajib diisi' : null;
+    final emailBersih = v.trim().toLowerCase();
+    if (!RegExp(r'^[a-z0-9._%+\-]+@[a-z0-9\-]+(\.[a-z0-9\-]+)+$')
+        .hasMatch(emailBersih)) {
       return 'Format email tidak valid, contoh: nama@gmail.com';
     }
-    final domain = v.split('@').last;
+    final domain = emailBersih.split('@').last;
     if (domain != 'gmail.com' &&
         !_domainAman.contains(domain) &&
         _jarak(domain, 'gmail.com') <= 2) {
@@ -59,5 +60,17 @@ class Validator {
       sebelum = kini;
     }
     return sebelum[b.length];
+  }
+}
+/// Mengubah semua huruf yang diketik menjadi huruf kecil secara langsung.
+class HurufKecilFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue lama,
+    TextEditingValue baru,
+  ) {
+    final kecil = baru.text.toLowerCase();
+    if (kecil == baru.text) return baru;
+    return baru.copyWith(text: kecil);
   }
 }
