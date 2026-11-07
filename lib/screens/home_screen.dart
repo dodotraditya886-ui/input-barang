@@ -13,7 +13,7 @@ import 'order_form_screen.dart';
 import 'profile_screen.dart';
 import 'ubah_harga_stok_screen.dart';
 
-/// Beranda: ringkasan angka, tiga menu utama, dan order terakhir.
+/// Beranda: ringkasan angka, menu utama, dan order terakhir.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -402,8 +402,8 @@ class _DetailOrder extends StatelessWidget {
                   labelAksi: 'Batalkan order',
                 );
                 if (!ya || !context.mounted) return;
-                provider.hapusOrder(order.id);
                 navigator.pop();
+                provider.hapusOrder(order.id);
               },
               child: const Text('Batalkan order'),
             ),
