@@ -25,7 +25,7 @@ class LabelSeksi extends StatelessWidget {
             ),
           ),
         ),
-        if (trailing != null) trailing!,
+        ?trailing,
       ],
     );
   }
