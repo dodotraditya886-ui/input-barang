@@ -32,12 +32,12 @@ class OrderItem {
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
-      barangId: json['barangId'] as String,
-      kode: json['kode'] as String,
-      nama: json['nama'] as String,
+      barangId: (json['barangId'] as String?) ?? '',
+      kode: (json['kode'] as String?) ?? '',
+      nama: (json['nama'] as String?) ?? '',
       satuan: (json['satuan'] as String?) ?? 'pcs',
-      harga: (json['harga'] as num).toInt(),
-      qty: (json['qty'] as num).toInt(),
+      harga: (json['harga'] as num?)?.toInt() ?? 0,
+      qty: (json['qty'] as num?)?.toInt() ?? 0,
     );
   }
 }
@@ -73,12 +73,14 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      id: json['id'] as String,
-      nomor: json['nomor'] as String,
-      waktu: DateTime.parse(json['waktu'] as String),
-      pelanggan: json['pelanggan'] as String,
+      id: (json['id'] as String?) ?? '',
+      nomor: (json['nomor'] as String?) ?? '',
+      waktu: json['waktu'] != null
+          ? DateTime.tryParse(json['waktu'] as String) ?? DateTime.now()
+          : DateTime.now(),
+      pelanggan: (json['pelanggan'] as String?) ?? '',
       catatan: (json['catatan'] as String?) ?? '',
-      items: (json['items'] as List<dynamic>)
+      items: (json['items'] as List<dynamic>? ?? [])
           .map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
