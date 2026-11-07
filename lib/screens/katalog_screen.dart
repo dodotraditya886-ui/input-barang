@@ -402,8 +402,8 @@ class _DetailBarang extends StatelessWidget {
                             '${b.nama} akan dihapus dari katalog. Riwayat order tetap tersimpan.',
                       );
                       if (!ya || !context.mounted) return;
-                      provider.hapusBarang(b.id);
                       navigator.pop();
+                      provider.hapusBarang(b.id);
                     },
                     child: const Text('Hapus'),
                   ),
