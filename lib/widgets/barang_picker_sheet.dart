@@ -76,7 +76,7 @@ class _BarangPickerSheetState extends State<_BarangPickerSheet> {
                     )
                   : ListView.separated(
                       itemCount: hasil.length,
-                      separatorBuilder: (_, __) => const Divider(),
+                      separatorBuilder: (_, _) => const Divider(),
                       itemBuilder: (_, i) {
                         final b = hasil[i];
                         return InkWell(
