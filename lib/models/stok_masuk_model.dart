@@ -39,15 +39,17 @@ class StokMasukModel {
 
   factory StokMasukModel.fromJson(Map<String, dynamic> json) {
     return StokMasukModel(
-      id: json['id'] as String,
-      barangId: json['barangId'] as String,
-      kode: json['kode'] as String,
-      nama: json['nama'] as String,
+      id: (json['id'] as String?) ?? '',
+      barangId: (json['barangId'] as String?) ?? '',
+      kode: (json['kode'] as String?) ?? '',
+      nama: (json['nama'] as String?) ?? '',
       satuan: (json['satuan'] as String?) ?? 'pcs',
-      qty: (json['qty'] as num).toInt(),
-      hargaBeli: (json['hargaBeli'] as num).toInt(),
+      qty: (json['qty'] as num?)?.toInt() ?? 0,
+      hargaBeli: (json['hargaBeli'] as num?)?.toInt() ?? 0,
       emailPemasok: (json['emailPemasok'] as String?) ?? '',
-      waktu: DateTime.parse(json['waktu'] as String),
+      waktu: json['waktu'] != null
+          ? DateTime.tryParse(json['waktu'] as String) ?? DateTime.now()
+          : DateTime.now(),
     );
   }
 }
