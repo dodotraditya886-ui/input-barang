@@ -45,7 +45,7 @@ class _BarangMasukScreenState extends State<BarangMasukScreen> {
       barangId: _barangId!,
       qty: int.parse(_qty.text),
       hargaBeli: int.parse(_hargaBeli.text),
-      emailPemasok: _email.text,
+      emailPemasok: _email.text.trim().toLowerCase(),
     );
     if (galat != null) {
       Umpan.galat(context, galat);
@@ -105,7 +105,7 @@ class _BarangMasukScreenState extends State<BarangMasukScreen> {
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _qty,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       onChanged: (_) => setState(() {}),
                       decoration: InputDecoration(
                         labelText: 'Stok masuk',
@@ -125,7 +125,7 @@ class _BarangMasukScreenState extends State<BarangMasukScreen> {
                     const SizedBox(height: 14),
                     TextFormField(
                       controller: _hargaBeli,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         labelText: 'Harga beli per satuan',
                         prefixText: 'Rp ',
@@ -139,6 +139,7 @@ class _BarangMasukScreenState extends State<BarangMasukScreen> {
                     TextFormField(
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [HurufKecilFormatter()],
                       autocorrect: false,
                       decoration: const InputDecoration(
                         labelText: 'Email pemasok',
