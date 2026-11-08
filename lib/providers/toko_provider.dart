@@ -6,13 +6,10 @@ import '../models/stok_masuk_model.dart';
 import '../services/toko_storage.dart';
 import '../utils/id_generator.dart';
 
-/// Hasil pembuatan order: salah satu dari [order] atau [error] terisi.
+
 typedef HasilOrder = ({OrderModel? order, String? error});
 
-/// Satu-satunya sumber data barang dan order.
-///
-/// Aturan data ditegakkan di sini, bukan hanya di form:
-/// kode barang unik, stok tidak boleh minus, order mengurangi stok.
+
 class TokoProvider extends ChangeNotifier {
   TokoProvider({TokoStorage? storage})
       : _storage = storage ?? SharedPrefsTokoStorage();
@@ -118,14 +115,12 @@ class TokoProvider extends ChangeNotifier {
   String? catatBarangMasuk({
     required String barangId,
     required int qty,
-    required int hargaBeli,
     required String emailPemasok,
     DateTime? waktu,
   }) {
     final b = cariBarang(barangId);
     if (b == null) return 'Barang tidak ditemukan';
     if (qty <= 0) return 'Jumlah masuk harus lebih dari 0';
-    if (hargaBeli <= 0) return 'Harga beli harus lebih dari 0';
 
     final catatan = StokMasukModel(
       id: generateId(),
@@ -134,7 +129,6 @@ class TokoProvider extends ChangeNotifier {
       nama: b.nama,
       satuan: b.satuan,
       qty: qty,
-      hargaBeli: hargaBeli,
       emailPemasok: emailPemasok,
       waktu: waktu ?? DateTime.now(),
     );
@@ -309,7 +303,7 @@ class TokoProvider extends ChangeNotifier {
     _jadwalkanSimpan();
   }
 
-  /// Simpan berurutan agar data lama tidak menimpa data yang lebih baru.
+  
   void _jadwalkanSimpan() {
     final snapshot = TokoData(barang: _barang, order: _order, masuk: _masuk);
     _antrianSimpan = _antrianSimpan
