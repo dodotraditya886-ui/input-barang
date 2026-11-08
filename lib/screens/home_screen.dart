@@ -7,11 +7,10 @@ import '../utils/app_theme.dart';
 import '../utils/format.dart';
 import '../widgets/common_widgets.dart';
 import 'barang_form_screen.dart';
-import 'barang_masuk_screen.dart';
 import 'katalog_screen.dart';
 import 'order_form_screen.dart';
 import 'profile_screen.dart';
-import 'ubah_harga_stok_screen.dart';
+import 'stok_harga_screen.dart';
 
 /// Beranda: ringkasan angka, menu utama, dan order terakhir.
 class HomeScreen extends StatelessWidget {
@@ -85,16 +84,9 @@ class HomeScreen extends StatelessWidget {
                   const Divider(),
                   _BarisMenu(
                     nomor: '04',
-                    judul: 'Barang masuk',
-                    keterangan: 'Tambah stok dari pemasok',
-                    onTap: () => _buka(context, const BarangMasukScreen()),
-                  ),
-                  const Divider(),
-                  _BarisMenu(
-                    nomor: '05',
-                    judul: 'Ubah harga & stok',
-                    keterangan: 'Koreksi harga jual dan stok',
-                    onTap: () => _buka(context, const UbahHargaStokScreen()),
+                    judul: 'Stok & harga',
+                    keterangan: 'Catat barang masuk dan ubah harga',
+                    onTap: () => _buka(context, const StokHargaScreen()),
                   ),
                 ],
               ),
