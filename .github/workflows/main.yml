@@ -1,1 +1,40 @@
+name: Flutter CI
 
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  cek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Ambil dependency
+        run: flutter pub get
+
+      - name: Analisis kode (cari error dan peringatan)
+        run: flutter analyze
+
+      - name: Jalankan unit test
+        run: flutter test
+
+      - name: Build APK (membuktikan aplikasi bisa dikompilasi)
+        run: flutter build apk --debug
+
+      - name: Simpan APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: lapak-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
