@@ -7,7 +7,6 @@ class StokMasukModel {
   final String nama;
   final String satuan;
   final int qty;
-  final int hargaBeli;
   final String emailPemasok;
   final DateTime waktu;
 
@@ -18,12 +17,9 @@ class StokMasukModel {
     required this.nama,
     required this.satuan,
     required this.qty,
-    required this.hargaBeli,
     required this.emailPemasok,
     required this.waktu,
   });
-
-  int get totalBeli => qty * hargaBeli;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -32,7 +28,6 @@ class StokMasukModel {
         'nama': nama,
         'satuan': satuan,
         'qty': qty,
-        'hargaBeli': hargaBeli,
         'emailPemasok': emailPemasok,
         'waktu': waktu.toIso8601String(),
       };
@@ -45,7 +40,6 @@ class StokMasukModel {
       nama: (json['nama'] as String?) ?? '',
       satuan: (json['satuan'] as String?) ?? 'pcs',
       qty: (json['qty'] as num?)?.toInt() ?? 0,
-      hargaBeli: (json['hargaBeli'] as num?)?.toInt() ?? 0,
       emailPemasok: (json['emailPemasok'] as String?) ?? '',
       waktu: json['waktu'] != null
           ? DateTime.tryParse(json['waktu'] as String) ?? DateTime.now()
