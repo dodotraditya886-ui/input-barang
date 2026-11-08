@@ -162,9 +162,13 @@ void validasi() {
   });
 
   group('Validator.email', () {
-    test('menolak huruf kapital', () {
-      expect(Validator.email('Nama@gmail.com'), contains('kapital'));
-      expect(Validator.email('nama@Gmail.com'), contains('kapital'));
+    test('huruf kapital dan spasi tepi diterima (disimpan huruf kecil)', () {
+      expect(Validator.email('Nama@gmail.com'), isNull);
+      expect(Validator.email('nama@Gmail.com'), isNull);
+      expect(Validator.email('  nama@gmail.com '), isNull);
+    });
+    test('salah ketik gmail tetap terdeteksi walau kapital', () {
+      expect(Validator.email('Nama@GMIAL.com'), contains('gmail.com'));
     });
     test('menolak salah ketik gmail.com', () {
       for (final d in ['gmial.com', 'gmai.com', 'gamil.com', 'gmail.con', 'gmail.co', 'gmaill.com']) {
@@ -195,19 +199,19 @@ void validasi() {
       p.tambahBarang(barang(stok: 4));
       expect(
         p.catatBarangMasuk(
-            barangId: 'b1', qty: 6, hargaBeli: 7000, emailPemasok: 'a@gmail.com'),
+            barangId: 'b1', qty: 6, emailPemasok: 'a@gmail.com'),
         isNull,
       );
       expect(p.cariBarang('b1')!.stok, 10);
       expect(p.cariBarang('b1')!.emailPemasok, 'a@gmail.com');
-      expect(p.riwayatMasuk.single.totalBeli, 42000);
+      expect(p.riwayatMasuk.single.qty, 6);
     });
     test('barang masuk menolak jumlah 0', () {
       final p = TokoProvider(storage: FakeStorage());
       p.tambahBarang(barang());
       expect(
         p.catatBarangMasuk(
-            barangId: 'b1', qty: 0, hargaBeli: 1, emailPemasok: 'a@gmail.com'),
+            barangId: 'b1', qty: 0, emailPemasok: 'a@gmail.com'),
         isNotNull,
       );
     });
